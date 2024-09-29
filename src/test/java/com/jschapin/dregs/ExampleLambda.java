@@ -3,6 +3,7 @@ package com.jschapin.dregs;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -19,11 +20,11 @@ public class ExampleLambda {
 
 
     public ExampleLambda() {
-        this(MappedRecord.fromSystem(Config.class));
+        this(System.getenv());
     }
 
-    public ExampleLambda(Config config) {
-        this.config = config;
+    public ExampleLambda(Map<String, String> environment) {
+        this.config = MappedRecord.fromMap(environment, Config.class);
     }
 
     public APIGatewayProxyResponseEvent handler(APIGatewayProxyRequestEvent event) {

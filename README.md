@@ -18,3 +18,4 @@ Null checks, default values, and other post-processing can be added using the "c
 #### Example Lambda using a Mapped Record
 
 https://github.com/johnchapin/lambda-dregs/blob/main/src/test/java/com/jschapin/dregs/ExampleLambda.java
+

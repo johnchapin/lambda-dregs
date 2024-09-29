@@ -53,20 +53,14 @@ public class MappedRecord {
         try {
             Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(types.toArray(new Class<?>[1]));
             return (Record) declaredConstructor.newInstance(values.toArray());
-        } catch (NoSuchMethodException |
-                 IllegalAccessException |
-                 java.lang.InstantiationException |
-                 InvocationTargetException
-                e
-        ) {
-            throw new InstantiationException(e);
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException |
+                 InvocationTargetException e) {
+            throw new RecordCreationException(e);
         }
     }
 
     private static String componentNameToKey(String fieldName) {
-        return fieldName
-                .replaceAll("([a-z])([A-Z])", "$1_$2")
-                .toUpperCase();
+        return fieldName.replaceAll("([a-z])([A-Z])", "$1_$2").toUpperCase();
     }
 
     private static Object parseValue(Type type, String rawValue) {
@@ -76,7 +70,7 @@ public class MappedRecord {
         return switch (type) {
             case Class<?> cl when cl == String.class -> rawValue;
             case Class<?> cl when cl == Character.class || cl == char.class ->
-                    rawValue.charAt(0); // Throws IndexOutOfBounds is empty
+                    rawValue.isEmpty() ? null : rawValue.charAt(0);
             case Class<?> cl when cl == Byte.class || cl == byte.class -> Byte.parseByte(rawValue);
             case Class<?> cl when cl == Short.class || cl == short.class -> Short.parseShort(rawValue);
             case Class<?> cl when cl == Integer.class || cl == int.class -> Integer.parseInt(rawValue);
