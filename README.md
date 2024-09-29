@@ -17,20 +17,4 @@ Null checks, default values, and other post-processing can be added using the "c
 
 #### Example Lambda using a Mapped Record
 
-```java
-// Given a record definition, MappedRecord.fromSystem instantiates a record 
-// by looking up environment variables based on the record component (field)
-// names.
-record Config(String baseUrl, int timeout) {}
-
-// System.getEnv() = {
-//   "BASE_URL": "https://www.test.com/",
-//   "TIMEOUT":  "60"
-// }
-
-var config = MappedRecord.fromSystem(Config.class);
-
-// Record field are typed
-config.baseUrl == "https://www.test.com/";
-config.timeout == 60;
-```
+https://github.com/johnchapin/lambda-dregs/blob/main/src/test/java/com/jschapin/dregs/ExampleLambda.java
